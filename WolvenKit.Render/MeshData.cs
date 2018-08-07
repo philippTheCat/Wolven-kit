@@ -75,7 +75,7 @@ namespace WolvenKit.Render
 
     public class BoneData
     {
-        public uint nbBones = 0;
+        public int nbBones = 0;
 
         public List<string> jointNames = new List<string>();
         public List<Matrix> boneMatrices = new List<Matrix>();

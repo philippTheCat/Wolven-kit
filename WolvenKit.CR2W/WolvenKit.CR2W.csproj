@@ -126,6 +126,7 @@
     <Compile Include="Types\CGenericGrassMask.cs" />
     <Compile Include="Types\CIndexed2dArray.cs" />
     <Compile Include="Types\CLayerInfo.cs" />
+    <Compile Include="Types\CMesh.cs" />
     <Compile Include="Types\CParticleSystem.cs" />
     <Compile Include="Types\CRagdoll.cs" />
     <Compile Include="Types\CSectorData.cs" />

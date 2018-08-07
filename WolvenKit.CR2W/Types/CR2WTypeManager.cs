@@ -80,6 +80,7 @@ namespace WolvenKit.CR2W.Types
 
             Register("CStorySceneScript", new CStorySceneScript(null));
 
+            Register("CMesh", new CMesh(null));
             Register("CMaterialInstance", new CMaterialInstance(null));
 
             Register("CClipMapCookedData", new CBytes(null));

@@ -1,4 +1,4 @@
-﻿using IrrlichtLime.Core;
+using IrrlichtLime.Core;
 using IrrlichtLime.Scene;
 using IrrlichtLime.Video;
 using System.Collections.Generic;
@@ -174,57 +174,24 @@ namespace WolvenKit.Render
                         CData.meshInfos.Add(meshInfo);
                     }
 
-                    // TODO: Create a more reliable solution
-                    var unknownBytes = chunk.unknownBytes.Bytes;
-                    using (var ms = new MemoryStream(unknownBytes))
-                    using (var br = new BinaryReader(ms))
+                    CData.boneData.nbBones = (chunk.GetVariableByName("numberOfBones") as CInt32).val;
+                    var jointStringIndices = (chunk.GetVariableByName("jointStringIndices") as CArray).array;
+                    for (int i = 0; i < CData.boneData.nbBones; i++)
                     {
-                        long prevPos = 0;
-                        bool correctPos = false;
-                        do
+                        var stringIdx = (jointStringIndices[i] as CInt16).val;
+                        CData.boneData.jointNames.Add(meshFile.strings[stringIdx].str);
+                    }
+                    var boneMatrices = (chunk.GetVariableByName("boneRigMatrices") as CArray).array;
+                    for (int i = 0; i < CData.boneData.nbBones; i++)
+                    {
+                        var boneMatrix = (boneMatrices[i] as CArray).array;
+                        Matrix matrix = new Matrix();
+                        for (int j = 0; j < 16; j++)
                         {
-                            prevPos = br.BaseStream.Position;
-                            CData.boneData.nbBones = (uint)br.ReadBit6();
-
-                            if (CData.boneData.nbBones == bonePositions.Count)
-                            {
-                                var backPos = br.BaseStream.Position;
-                                correctPos = true;
-                                for (int i = 0; i < CData.boneData.nbBones; i++)
-                                {
-                                    var stringIdx = br.ReadUInt16();
-                                    if (stringIdx == 0 || stringIdx >= meshFile.strings.Count)
-                                    {
-                                        CData.boneData.nbBones = 0;
-                                        correctPos = false;
-                                        break;
-                                    }
-                                }
-                                br.BaseStream.Position = backPos;
-                            }
-                        } while (CData.boneData.nbBones != bonePositions.Count && br.BaseStream.Position < unknownBytes.Length && !correctPos);
-
-                        if (br.BaseStream.Position < unknownBytes.Length)
-                        {
-                            br.BaseStream.Position = prevPos;
-                            CData.boneData.nbBones = (uint)br.ReadBit6();
-                            for (uint i = 0; i < CData.boneData.nbBones; i++)
-                            {
-                                var stringIdx = br.ReadUInt16();
-                                CData.boneData.jointNames.Add(meshFile.strings[stringIdx].str);
-                            }
-                            br.ReadBit6();
-                            for (uint i = 0; i < CData.boneData.nbBones; i++)
-                            {
-                                Matrix matrix = new Matrix();
-                                for (int j = 0; j < 16; j++)
-                                {
-                                    var value = br.ReadSingle();
-                                    matrix.SetElement(j, value);
-                                }
-                                CData.boneData.boneMatrices.Add(matrix);
-                            }
+                            var value = (boneMatrix[j] as CFloat).val;
+                            matrix.SetElement(j, value);
                         }
+                        CData.boneData.boneMatrices.Add(matrix);
                     }
                 }
                 else if (chunk.Type == "CMaterialInstance")
