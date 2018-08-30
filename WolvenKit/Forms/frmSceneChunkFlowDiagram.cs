@@ -12,7 +12,7 @@ using WolvenKit.FlowTreeEditors;
 
 namespace WolvenKit
 {
-    public partial class frmChunkFlowDiagram : DockContent
+    public partial class frmSceneChunkFlowDiagram : DockContent
     {
         private readonly int connectionPointSize = 7;
 
@@ -48,7 +48,7 @@ namespace WolvenKit
         public static float zoom = 100;
         public static bool zoomchanged = false;
 
-        public frmChunkFlowDiagram()
+        public frmSceneChunkFlowDiagram()
         {
             InitializeComponent();
 
@@ -321,10 +321,9 @@ namespace WolvenKit
                 zoom -= 7;
             if (zoom < 23)
                 zoom = 23;
-            foreach (ChunkEditor c in Controls)
-            {
-                c.Size = new Size((int)(c.OriginalSize.Width * zoom / 100), (int)(c.OriginalSize.Height * zoom / 100));
-                c.Left = (int)(c.Left * zoom / prevZoom);
+            foreach (ChunkEditor c in Controls) {
+                //c.Zoom(zoom, prevZoom);
+               
             }
             Invalidate();
         }

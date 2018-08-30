@@ -825,15 +825,28 @@ namespace WolvenKit
             {
                 case ".w2scene":
                     {
-                        doc.flowDiagram = new frmChunkFlowDiagram
+                        doc.sceneEditor = new frmSceneChunkFlowDiagram
                         {
                             File = doc.File,
                             DockAreas = DockAreas.Document
                         };
-                        doc.flowDiagram.OnSelectChunk += doc.frmCR2WDocument_OnSelectChunk;
-                        doc.flowDiagram.Show(doc.FormPanel, DockState.Document);
+                        doc.sceneEditor.OnSelectChunk += doc.frmCr2WDocumentOnSelectChunkEvent;
+                        doc.sceneEditor.Show(doc.FormPanel, DockState.Document);
                         break;
                     }
+                
+                case ".w2quest":
+                case ".w2phase":
+                {
+                    doc.questEditor = new frmQuestChunkFlowDiagram
+                                      {
+                                          File = doc.File,
+                                          DockAreas = DockAreas.Document
+                                      };
+                    doc.questEditor.OnSelectChunkEvent += doc.frmCr2WDocumentOnSelectChunkEvent;
+                    doc.questEditor.Show(doc.FormPanel, DockState.Document);
+                    break;
+                }
                 case ".journal":
                     {
                         doc.JournalEditor = new frmJournalEditor

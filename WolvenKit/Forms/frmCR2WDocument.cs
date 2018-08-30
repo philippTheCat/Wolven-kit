@@ -11,7 +11,8 @@ namespace WolvenKit
         public frmChunkList chunkList;
         public frmChunkProperties propertyWindow;
         public frmEmbeddedFiles embeddedFiles;
-        public frmChunkFlowDiagram flowDiagram;
+        public frmSceneChunkFlowDiagram sceneEditor;
+        public frmQuestChunkFlowDiagram questEditor;
         public frmJournalEditor JournalEditor;
         public frmImagePreview ImageViewer;
         public Render.frmRender RenderViewer;
@@ -38,7 +39,7 @@ namespace WolvenKit
                 DockAreas = DockAreas.Document
             };
             chunkList.Show(dockPanel, DockState.Document);
-            chunkList.OnSelectChunk += frmCR2WDocument_OnSelectChunk;
+            chunkList.OnSelectChunk += frmCr2WDocumentOnSelectChunkEvent;
             propertyWindow = new frmChunkProperties();
             propertyWindow.Show(dockPanel, DockState.DockBottom);
 
@@ -57,9 +58,14 @@ namespace WolvenKit
                     chunkList.File = file;
                 }
 
-                if (flowDiagram != null && !flowDiagram.IsDisposed)
+                if (sceneEditor != null && !sceneEditor.IsDisposed)
                 {
-                    flowDiagram.File = file;
+                    sceneEditor.File = file;
+                }
+                
+                if (questEditor != null && !questEditor.IsDisposed)
+                {
+                    questEditor.File = file;
                 }
 
                 if (JournalEditor != null && !JournalEditor.IsDisposed)
@@ -115,7 +121,7 @@ namespace WolvenKit
             return null;
         }
 
-        public void frmCR2WDocument_OnSelectChunk(object sender, SelectChunkArgs e)
+        public void frmCr2WDocumentOnSelectChunkEvent(object sender, SelectChunkArgs e)
         {
             if (propertyWindow == null || propertyWindow.IsDisposed)
             {

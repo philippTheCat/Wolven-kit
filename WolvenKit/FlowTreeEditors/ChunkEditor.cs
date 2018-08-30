@@ -29,6 +29,9 @@ namespace WolvenKit.FlowTreeEditors
         }
 
         private Size originalSize;
+        
+        protected float zoomFactor = 1;
+
         public Size OriginalSize
         {
             get { return originalSize; }
@@ -43,18 +46,18 @@ namespace WolvenKit.FlowTreeEditors
         public event EventHandler<SelectChunkArgs> OnSelectChunk;
         public event EventHandler<MoveEditorArgs> OnManualMove;
 
-        private void lblTitle_MouseDown(object sender, MouseEventArgs e)
+        protected void lblTitle_MouseDown(object sender, MouseEventArgs e)
         {
             mouseStart = e.Location;
             mouseMoving = true;
         }
 
-        private void lblTitle_MouseUp(object sender, MouseEventArgs e)
+        protected void lblTitle_MouseUp(object sender, MouseEventArgs e)
         {
             mouseMoving = false;
         }
 
-        private void lblTitle_MouseMove(object sender, MouseEventArgs e)
+        protected void lblTitle_MouseMove(object sender, MouseEventArgs e)
         {
             if (mouseMoving)
             {
@@ -71,7 +74,11 @@ namespace WolvenKit.FlowTreeEditors
         public virtual void UpdateView()
         {
             lblTitle.Text = chunk.Name;
-            Height = lblTitle.Height;
+            UpdateHeight();
+        }
+
+        public virtual void UpdateHeight() {
+            Height = (int) (lblTitle.Height * zoomFactor);
         }
 
         public virtual List<CPtr> GetConnections()
@@ -79,12 +86,12 @@ namespace WolvenKit.FlowTreeEditors
             return null;
         }
 
-        private void lblTitle_Click(object sender, EventArgs e)
+        protected void lblTitle_Click(object sender, EventArgs e)
         {
             FireSelectEvent(Chunk);
         }
 
-        private void ChunkEditor_Click(object sender, EventArgs e)
+        protected void ChunkEditor_Click(object sender, EventArgs e)
         {
             FireSelectEvent(Chunk);
         }
@@ -98,5 +105,19 @@ namespace WolvenKit.FlowTreeEditors
         {
             return new Point(0, Height/2);
         }
+
+        public virtual IEnumerable<Connection> getNewConnections() {
+            return new List<Connection>();
+        }
+
+        public virtual Point GetNewConnectionLocation(string connection) {
+            throw new NotImplementedException();
+        }
+
+        public virtual void addSocket(string name, bool isInput) {
+            throw new NotImplementedException();
+        }
+
+       
     }
 }

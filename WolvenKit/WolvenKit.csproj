@@ -315,11 +315,25 @@
     <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="DDSUtility.cs" />
     <Compile Include="discord.cs" />
+    <Compile Include="FlowTreeEditors\EditorNode.cs" />
+    <Compile Include="FlowTreeEditors\Graph\Graph.cs" />
+    <Compile Include="FlowTreeEditors\Graph\GraphNode.cs" />
+    <Compile Include="FlowTreeEditors\Graph\ReingoldTilford.cs" />
+    <Compile Include="FlowTreeEditors\Graph\WolvenGraph.cs" />
+    <Compile Include="FlowTreeEditors\QuestPhaseEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\frmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmLoading.Designer.cs">
       <DependentUpon>frmLoading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmQuestChunkFlowDiagram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmQuestChunkFlowDiagram.Designer.cs">
+      <DependentUpon>frmQuestChunkFlowDiagram.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmStringsGuiImporterIDDialog.cs">
       <SubType>Form</SubType>
@@ -484,11 +498,11 @@
     <Compile Include="Forms\frmAssetBrowser.Designer.cs">
       <DependentUpon>frmAssetBrowser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmChunkFlowDiagram.cs">
+    <Compile Include="Forms\frmSceneChunkFlowDiagram.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmChunkFlowDiagram.Designer.cs">
-      <DependentUpon>frmChunkFlowDiagram.cs</DependentUpon>
+    <Compile Include="Forms\frmSceneChunkFlowDiagram.Designer.cs">
+      <DependentUpon>frmSceneChunkFlowDiagram.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmChunkList.cs">
       <SubType>Form</SubType>
@@ -596,8 +610,11 @@
       <DependentUpon>frmAssetBrowser.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmChunkFlowDiagram.resx">
-      <DependentUpon>frmChunkFlowDiagram.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\frmQuestChunkFlowDiagram.resx">
+      <DependentUpon>frmQuestChunkFlowDiagram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSceneChunkFlowDiagram.resx">
+      <DependentUpon>frmSceneChunkFlowDiagram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmChunkList.resx">
       <DependentUpon>frmChunkList.cs</DependentUpon>
@@ -869,7 +886,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <PublishFile Include="AltoControls">
       <Visible>False</Visible>
